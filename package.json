@@ -1,0 +1,7 @@
+{
+  "name": "mern-task-manager",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "alex",
+  "license": "MIT"
+}
