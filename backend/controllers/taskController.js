@@ -25,4 +25,20 @@ const getTasks = async (req, res) => {
   }
 };
 
-export { createTask, getTasks };
+//* @desc Get a single task by id
+//* @route GET /api/tasks/:id
+//* @access Public
+const getTaskById = async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+    if (task) {
+      res.status(200).json(task);
+    } else {
+      res.status(404).json({ message: 'Task not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export { createTask, getTasks, getTaskById };
