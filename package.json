@@ -2,6 +2,16 @@
   "name": "mern-task-manager",
   "version": "1.0.0",
   "main": "server.js",
+  "keywords": [],
   "author": "alex",
-  "license": "MIT"
+  "license": "MIT",
+
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js"
+  },
+
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
