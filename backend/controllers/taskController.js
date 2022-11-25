@@ -29,8 +29,9 @@ const getTasks = async (req, res) => {
 //* @route GET /api/tasks/:id
 //* @access Public
 const getTaskById = async (req, res) => {
+  const { id } = req.params;
   try {
-    const task = await Task.findById(req.params.id);
+    const task = await Task.findById(id);
     if (task) {
       res.status(200).json(task);
     } else {
@@ -41,4 +42,21 @@ const getTaskById = async (req, res) => {
   }
 };
 
-export { createTask, getTasks, getTaskById };
+//* @desc Delete a single task by id
+//* @route DELETE /api/tasks/:id
+//* @access Public
+const deleteTaskById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const task = await Task.findByIdAndDelete(id);
+    if (task) {
+      res.status(200).json('Task has been deleted');
+    } else {
+      res.status(404).json('Task not found');
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export { createTask, getTasks, getTaskById, deleteTaskById };
