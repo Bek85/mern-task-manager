@@ -8,7 +8,9 @@
   "type": "module",
   "scripts": {
     "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js"
+    "server": "nodemon backend/server.js",
+    "client": "cd frontend/&& yarn dev",
+    "dev": "concurrently \"yarn server\" \"yarn client\""
   },
   "dependencies": {
     "dotenv": "^16.0.3",
