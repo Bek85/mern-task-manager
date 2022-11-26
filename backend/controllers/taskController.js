@@ -59,4 +59,24 @@ const deleteTaskById = async (req, res) => {
   }
 };
 
-export { createTask, getTasks, getTaskById, deleteTaskById };
+//* @desc Update a single task by id
+//* @route UPDATE /api/tasks/:id
+//* @access Public
+const updateTaskById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const task = await Task.findByIdAndUpdate({ _id: id }, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (task) {
+      res.status(200).json(task);
+    } else {
+      res.status(404).json('Task not found');
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export { createTask, getTasks, getTaskById, deleteTaskById, updateTaskById };
