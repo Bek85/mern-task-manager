@@ -1,7 +1,14 @@
-export default function TaskForm() {
+export default function TaskForm({ name, createTask, handleInputChange }) {
   return (
-    <div>
-      <h2>TaskForm</h2>
-    </div>
+    <form className="task-form" onSubmit={createTask}>
+      <input
+        type="text"
+        placeholder="Add a task"
+        name="name"
+        value={name}
+        onChange={handleInputChange}
+      />
+      <button type="submit">Add</button>
+    </form>
   );
 }
