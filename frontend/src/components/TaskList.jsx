@@ -24,6 +24,7 @@ export default function TaskList() {
     }
     try {
       await axios.post('/api/tasks', formData);
+      toast.success('New task has been added successfully');
       setFormData({ ...formData, name: '' });
     } catch (error) {
       toast.error(error.message);
