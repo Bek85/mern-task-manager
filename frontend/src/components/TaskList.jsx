@@ -51,6 +51,16 @@ export default function TaskList() {
     getTasks();
   }, [name]);
 
+  const deleteTask = async (id) => {
+    try {
+      await axios.delete(`/api/tasks/${id}`);
+      getTasks();
+      toast.success('Task has been deleted successfully');
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div>
       <h2>Task Manager</h2>
@@ -77,7 +87,14 @@ export default function TaskList() {
         <p className="--py">No task added. Please add a task</p>
       ) : (
         tasks.map((task, index) => {
-          return <Task key={task._id} task={task} index={index} />;
+          return (
+            <Task
+              key={task._id}
+              task={task}
+              index={index}
+              deleteTask={deleteTask}
+            />
+          );
         })
       )}
     </div>
