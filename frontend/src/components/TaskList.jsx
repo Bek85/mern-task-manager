@@ -91,6 +91,24 @@ export default function TaskList() {
     }
   };
 
+  const setToComplete = async (task) => {
+    const newFormData = {
+      name: task.name,
+      completed: !task.completed,
+    };
+    try {
+      const { data } = await axios.put(`/api/tasks/${task._id}`, newFormData);
+      getTasks();
+      if (data.completed) {
+        toast.success('Task set to completed');
+      } else {
+        toast.warn('Task set to uncompleted');
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div>
       <h2>Task Manager</h2>
@@ -126,6 +144,7 @@ export default function TaskList() {
               index={index}
               deleteTask={deleteTask}
               getSingleTask={getSingleTask}
+              setToComplete={setToComplete}
             />
           );
         })

@@ -8,7 +8,7 @@ export default function App() {
       <div className="task-container">
         <TaskList />
       </div>
-      <ToastContainer />
+      <ToastContainer position="top-center" />
     </div>
   );
 }
