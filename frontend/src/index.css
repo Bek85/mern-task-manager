@@ -243,6 +243,9 @@ p {
   margin-bottom: 2rem;
 }
 
+.--my1 {
+  margin: 1rem 0;
+}
 .--my2 {
   margin: 2rem 0;
 }
