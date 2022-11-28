@@ -32,6 +32,7 @@ export default function TaskList() {
       await axios.post('/api/tasks', formData);
       toast.success('New task has been added successfully');
       setFormData({ ...formData, name: '' });
+      getTasks();
     } catch (error) {
       toast.error(error.message);
     }
@@ -52,6 +53,11 @@ export default function TaskList() {
   useEffect(() => {
     getTasks();
   }, []);
+
+  useEffect(() => {
+    const completedTask = tasks.filter((task) => task.completed === true);
+    setCompletedTasks(completedTask);
+  }, [tasks]);
 
   const deleteTask = async (id) => {
     try {
@@ -119,14 +125,17 @@ export default function TaskList() {
         isEditing={isEditing}
         updateTask={updateTask}
       />
-      <div className="--flex-between">
-        <p>
-          <b>Total Tasks:</b> {tasks.length}
-        </p>
-        <p>
-          <b>Completed Tasks:</b> 0
-        </p>
-      </div>
+      {tasks.length > 0 && (
+        <div className="--flex-between">
+          <p>
+            <b>Total Tasks:</b> {tasks.length}
+          </p>
+          <p>
+            <b>Completed Tasks:</b> {completedTasks.length}
+          </p>
+        </div>
+      )}
+
       <hr className="--my1" />
       {loading && (
         <div className="--flex-center">
