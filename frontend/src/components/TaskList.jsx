@@ -13,6 +13,8 @@ export default function TaskList() {
     name: '',
     completed: false,
   });
+  const [isEditing, setIsEditing] = useState(false);
+  const [taskId, setTaskId] = useState('');
 
   const { name } = formData;
 
@@ -49,13 +51,41 @@ export default function TaskList() {
 
   useEffect(() => {
     getTasks();
-  }, [name]);
+  }, []);
 
   const deleteTask = async (id) => {
     try {
       await axios.delete(`/api/tasks/${id}`);
       getTasks();
       toast.success('Task has been deleted successfully');
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const getSingleTask = async (task) => {
+    setFormData({
+      name: task.name,
+      completed: false,
+    });
+    setTaskId(task._id);
+    setIsEditing(true);
+  };
+
+  const updateTask = async (evt) => {
+    evt.preventDefault();
+    if (name === '') {
+      return toast.error('Input field cannot be empty');
+    }
+    try {
+      await axios.put(`/api/tasks/${taskId}`, formData);
+      toast.success('Task has been updated');
+      setFormData({
+        ...formData,
+        name: '',
+      });
+      setIsEditing(false);
+      getTasks();
     } catch (error) {
       toast.error(error.message);
     }
@@ -68,6 +98,8 @@ export default function TaskList() {
         createTask={createTask}
         handleInputChange={handleInputChange}
         name={name}
+        isEditing={isEditing}
+        updateTask={updateTask}
       />
       <div className="--flex-between">
         <p>
@@ -93,6 +125,7 @@ export default function TaskList() {
               task={task}
               index={index}
               deleteTask={deleteTask}
+              getSingleTask={getSingleTask}
             />
           );
         })
