@@ -15,7 +15,7 @@ app.use(
     origin: [
       'http://127.0.0.1:5173',
       'http://localhost:8000',
-      'https://mern-task-manager-0psf.onrender.com/',
+      'https://mern-task-manager-0psf.onrender.com',
     ],
   })
 );
