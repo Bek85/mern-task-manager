@@ -10,7 +10,8 @@
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "client": "cd frontend/&& yarn dev",
-    "dev": "concurrently \"yarn server\" \"yarn client\""
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
+    "render-postbuild": "NPM_CONFIG_PRODUCTION=false cd frontend/&& yarn && yarn build"
   },
   "dependencies": {
     "cors": "^2.8.5",
