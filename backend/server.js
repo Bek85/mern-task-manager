@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import colors from 'colors';
+// import colors from 'colors';
 import dotenv from 'dotenv';
 import connectDB from './config/connectDB.js';
 import taskRoutes from './routes/taskRoute.js';
@@ -12,7 +12,7 @@ dotenv.config();
 app.use(express.json());
 app.use(
   cors({
-    origin: ['http://localhost:3000/'],
+    origin: ['http://localhost:8000/'],
   })
 );
 
@@ -38,7 +38,7 @@ const startServer = async () => {
       PORT,
       console.log(
         `Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`
-          .yellow.bold
+        // .yellow.bold
       )
     );
   } catch (error) {
