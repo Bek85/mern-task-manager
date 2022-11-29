@@ -5,6 +5,8 @@ import TaskForm from './TaskForm';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 export default function TaskList() {
   const [tasks, setTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
@@ -29,7 +31,7 @@ export default function TaskList() {
       return toast.error('Input field cannot be empty');
     }
     try {
-      await axios.post('/api/tasks', formData);
+      await axios.post(`${backendUrl}/api/tasks`, formData);
       toast.success('New task has been added successfully');
       setFormData({ ...formData, name: '' });
       getTasks();
@@ -41,7 +43,7 @@ export default function TaskList() {
   const getTasks = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('/api/tasks');
+      const res = await axios.get(`${backendUrl}/api/tasks`);
       setTasks(res.data);
       setLoading(false);
     } catch (error) {
@@ -61,7 +63,7 @@ export default function TaskList() {
 
   const deleteTask = async (id) => {
     try {
-      await axios.delete(`/api/tasks/${id}`);
+      await axios.delete(`${backendUrl}/api/tasks/${id}`);
       getTasks();
       toast.success('Task has been deleted successfully');
     } catch (error) {
@@ -84,7 +86,7 @@ export default function TaskList() {
       return toast.error('Input field cannot be empty');
     }
     try {
-      await axios.put(`/api/tasks/${taskId}`, formData);
+      await axios.put(`${backendUrl}/api/tasks/${taskId}`, formData);
       toast.success('Task has been updated');
       setFormData({
         ...formData,
@@ -103,7 +105,10 @@ export default function TaskList() {
       completed: !task.completed,
     };
     try {
-      const { data } = await axios.put(`/api/tasks/${task._id}`, newFormData);
+      const { data } = await axios.put(
+        `${backendUrl}/api/tasks/${task._id}`,
+        newFormData
+      );
       getTasks();
       if (data.completed) {
         toast.success('Task set to completed');

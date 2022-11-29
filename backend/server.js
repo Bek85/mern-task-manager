@@ -12,7 +12,11 @@ dotenv.config();
 app.use(express.json());
 app.use(
   cors({
-    origin: ['http://localhost:8000/'],
+    origin: [
+      'http://127.0.0.1:5173',
+      'http://localhost:8000',
+      'https://mern-task-manager-0psf.onrender.com/',
+    ],
   })
 );
 
