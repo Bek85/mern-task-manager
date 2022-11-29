@@ -4,7 +4,6 @@ import colors from 'colors';
 import dotenv from 'dotenv';
 import connectDB from './config/connectDB.js';
 import taskRoutes from './routes/taskRoute.js';
-const PORT = process.env.PORT || 8000;
 
 const app = express();
 
@@ -13,12 +12,24 @@ dotenv.config();
 app.use(express.json());
 app.use(
   cors({
-    origin: ['http://localhost:8000/'],
+    origin: ['http://localhost:3000/'],
   })
 );
 
 // Routes
 app.use('/api/tasks', taskRoutes);
+
+//* Serve static assets in production, must be at this location of this file
+if (process.env.NODE_ENV === 'production') {
+  //*Set static folder
+  app.use(express.static('frontend/build'));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  );
+}
+
+const PORT = process.env.PORT || 8000;
 
 const startServer = async () => {
   try {
